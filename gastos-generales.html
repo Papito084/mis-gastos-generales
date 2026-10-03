@@ -301,18 +301,18 @@ const MONTHS_ES    = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','
 const MONTHS_SHORT = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 
 const CATEGORIES = [
-  { id:'alimentacion',  label:'Alimentaci\u00f3n',     icon:'\U0001f6d2', color:'#34d399' },
-  { id:'transporte',    label:'Transporte',               icon:'\U0001f697', color:'#60a5fa' },
-  { id:'ocio',          label:'Ocio',                     icon:'\U0001f389', color:'#f472b6' },
-  { id:'restaurantes',  label:'Restaurantes',             icon:'\U0001f37d\ufe0f', color:'#fb923c' },
-  { id:'salud',         label:'Salud \u0026 Farmacia',   icon:'\U0001f48a', color:'#f87171' },
-  { id:'hogar',         label:'Hogar \u0026 Servicios',  icon:'\U0001f3e0', color:'#fbbf24' },
-  { id:'ropa',          label:'Ropa \u0026 Moda',        icon:'\U0001f457', color:'#c084fc' },
-  { id:'tecnologia',    label:'Tecnolog\u00eda',         icon:'\U0001f4bb', color:'#38bdf8' },
-  { id:'educacion',     label:'Educaci\u00f3n',          icon:'\U0001f4da', color:'#4ade80' },
+  { id:'alimentacion',  label:'Alimentaci\u00f3n',     icon:'\u{1f6d2}', color:'#34d399' },
+  { id:'transporte',    label:'Transporte',               icon:'\u{1f697}', color:'#60a5fa' },
+  { id:'ocio',          label:'Ocio',                     icon:'\u{1f389}', color:'#f472b6' },
+  { id:'restaurantes',  label:'Restaurantes',             icon:'\u{1f37d}\ufe0f', color:'#fb923c' },
+  { id:'salud',         label:'Salud \u0026 Farmacia',   icon:'\u{1f48a}', color:'#f87171' },
+  { id:'hogar',         label:'Hogar \u0026 Servicios',  icon:'\u{1f3e0}', color:'#fbbf24' },
+  { id:'ropa',          label:'Ropa \u0026 Moda',        icon:'\u{1f457}', color:'#c084fc' },
+  { id:'tecnologia',    label:'Tecnolog\u00eda',         icon:'\u{1f4bb}', color:'#38bdf8' },
+  { id:'educacion',     label:'Educaci\u00f3n',          icon:'\u{1f4da}', color:'#4ade80' },
   { id:'viajes',        label:'Viajes',                   icon:'\u2708\ufe0f', color:'#a78bfa' },
-  { id:'suscripciones', label:'Suscripciones',            icon:'\U0001f4cb', color:'#94a3b8' },
-  { id:'otros',         label:'Otros',                    icon:'\U0001f4e6', color:'#fb923c' },
+  { id:'suscripciones', label:'Suscripciones',            icon:'\u{1f4cb}', color:'#94a3b8' },
+  { id:'otros',         label:'Otros',                    icon:'\u{1f4e6}', color:'#fb923c' },
 ];
 
 function catById(id){ return CATEGORIES.find(c=>c.id===id)||{id,label:id,icon:'\u2753',color:'#7b82a8'}; }
@@ -386,7 +386,7 @@ function renderDashboard(){
   else{document.getElementById('sTopCat').textContent='\u2014';document.getElementById('sTopCatAmt').textContent='\u2014';}
   const catSegs=CATEGORIES.map(c=>({v:byCat[c.id]||0,c:c.color,l:c.icon+' '+c.label})).filter(s=>s.v>0);
   renderDonut('cDonut','donutLegend',catSegs,total);
-  renderDonut('cDonut2','donutLegend2',[{v:card,c:'#60a5fa',l:'\U0001f4b3 Tarjeta'},{v:cash,c:'#34d399',l:'\U0001f4b5 Efectivo'},{v:bizum,c:'#c4b5fd',l:'\U0001f4f1 Bizum'}],total);
+  renderDonut('cDonut2','donutLegend2',[{v:card,c:'#60a5fa',l:'\u{1f4b3} Tarjeta'},{v:cash,c:'#34d399',l:'\u{1f4b5} Efectivo'},{v:bizum,c:'#c4b5fd',l:'\u{1f4f1} Bizum'}],total);
   renderLineChart();renderRecent(data);
 }
 
@@ -398,10 +398,10 @@ function renderGastos(){
   if(pay)data=data.filter(e=>e.pago===pay);
   data.sort((a,b)=>order==='fecha-desc'?b.fecha.localeCompare(a.fecha):order==='fecha-asc'?a.fecha.localeCompare(b.fecha):order==='importe-desc'?b.importe-a.importe:a.importe-b.importe);
   const rows=document.getElementById('gastoRows');
-  if(!data.length){rows.innerHTML=`<div class="empty"><div class="empty-icon">\U0001f4b8</div><div class="empty-text">Sin gastos registrados</div><div class="empty-sub">Pulsa "+ Nuevo" para a\u00f1adir tu primer gasto</div></div>`;document.getElementById('gastoCount').textContent='';return;}
+  if(!data.length){rows.innerHTML=`<div class="empty"><div class="empty-icon">\u{1f4b8}</div><div class="empty-text">Sin gastos registrados</div><div class="empty-sub">Pulsa "+ Nuevo" para a\u00f1adir tu primer gasto</div></div>`;document.getElementById('gastoCount').textContent='';return;}
   rows.innerHTML=data.map(e=>{
-    const c=catById(e.categoria),payClass=e.pago==='tarjeta'?'pay-tarjeta':e.pago==='bizum'?'pay-bizum':'pay-efectivo',payIcon=e.pago==='tarjeta'?'\U0001f4b3':e.pago==='bizum'?'\U0001f4f1':'\U0001f4b5';
-    return `<div class="expense-row" onclick="openModal('${e.id}')"><div style="color:var(--muted);font-size:12px">${fmtD(e.fecha)}</div><div><div style="font-weight:600;font-size:13px">${e.lugar||e.desc||'\u2014'}${e.recurrente?' \U0001f504':''}</div>${e.desc&&e.lugar?`<div style="font-size:11px;color:var(--muted)">${e.desc}</div>`:''}</div><div><span class="pill" style="background:${c.color}20;color:${c.color};border:1px solid ${c.color}40">${c.icon} ${c.label}</span></div><div><span class="pill ${payClass}">${payIcon} ${e.pago}</span></div><div style="text-align:right;font-weight:600;font-size:13px">${fmt(e.importe,e.moneda||'\u20ac')}</div><div><button class="del-btn" onclick="event.stopPropagation();delExpense('${e.id}')">\U0001f5d1</button></div></div>`;
+    const c=catById(e.categoria),payClass=e.pago==='tarjeta'?'pay-tarjeta':e.pago==='bizum'?'pay-bizum':'pay-efectivo',payIcon=e.pago==='tarjeta'?'\u{1f4b3}':e.pago==='bizum'?'\u{1f4f1}':'\u{1f4b5}';
+    return `<div class="expense-row" onclick="openModal('${e.id}')"><div style="color:var(--muted);font-size:12px">${fmtD(e.fecha)}</div><div><div style="font-weight:600;font-size:13px">${e.lugar||e.desc||'\u2014'}${e.recurrente?' \u{1f504}':''}</div>${e.desc&&e.lugar?`<div style="font-size:11px;color:var(--muted)">${e.desc}</div>`:''}</div><div><span class="pill" style="background:${c.color}20;color:${c.color};border:1px solid ${c.color}40">${c.icon} ${c.label}</span></div><div><span class="pill ${payClass}">${payIcon} ${e.pago}</span></div><div style="text-align:right;font-weight:600;font-size:13px">${fmt(e.importe,e.moneda||'\u20ac')}</div><div><button class="del-btn" onclick="event.stopPropagation();delExpense('${e.id}')">\u{1f5d1}</button></div></div>`;
   }).join('');
   const total=sum(data);document.getElementById('gastoCount').textContent=`${data.length} transacci\u00f3n${data.length!==1?'es':''} \u00b7 Total: ${fmt(total)}`;
 }
@@ -446,7 +446,7 @@ function renderStats(){
   const top5=[...data].sort((a,b)=>b.importe-a.importe).slice(0,5);
   const t5el=document.getElementById('top5List');
   if(!top5.length){t5el.innerHTML='<div class="empty" style="padding:24px"><div class="empty-sub">Sin datos</div></div>';return;}
-  t5el.innerHTML=top5.map((e,i)=>{const c=catById(e.categoria);return `<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)"><div style="width:24px;height:24px;border-radius:50%;background:${c.color};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#0f1117;flex-shrink:0">${i+1}</div><div style="flex:1"><div style="font-weight:600;font-size:13px">${e.lugar||e.desc||'\u2014'}${e.recurrente?' \U0001f504':''}</div><div style="font-size:11px;color:var(--muted)">${fmtD(e.fecha)} \u00b7 ${c.icon} ${c.label}</div></div><div style="font-weight:700;color:${c.color}">${fmt(e.importe,e.moneda||'\u20ac')}</div></div>`;}).join('');
+  t5el.innerHTML=top5.map((e,i)=>{const c=catById(e.categoria);return `<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)"><div style="width:24px;height:24px;border-radius:50%;background:${c.color};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#0f1117;flex-shrink:0">${i+1}</div><div style="flex:1"><div style="font-weight:600;font-size:13px">${e.lugar||e.desc||'\u2014'}${e.recurrente?' \u{1f504}':''}</div><div style="font-size:11px;color:var(--muted)">${fmtD(e.fecha)} \u00b7 ${c.icon} ${c.label}</div></div><div style="font-weight:700;color:${c.color}">${fmt(e.importe,e.moneda||'\u20ac')}</div></div>`;}).join('');
 }
 
 function renderBudget(){
@@ -458,12 +458,12 @@ function renderBudget(){
     return `<div style="margin-bottom:22px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="font-size:14px;font-weight:600">${c.icon} ${c.label}</span><span style="font-size:13px"><span style="font-weight:700;color:${col}">${fmt(spent)}</span><span style="color:var(--muted)"> / ${fmt(limit)}</span>${over?`<span class="pill" style="background:#f8717130;color:#f87171;margin-left:8px">\u26a0\ufe0f Excedido</span>`:''}</span></div><div class="prog-wrap"><div class="prog-fill" style="width:${pct}%;background:${col}"></div></div><div style="font-size:11px;color:var(--muted);margin-top:5px">${over?`Excedido en ${fmt(spent-limit)}`:`Disponible: ${fmt(limit-spent)}`}</div></div>`;
   }).join('');
 }
-function saveBudget(){CATEGORIES.forEach(c=>{const el=document.getElementById('b_'+c.id);if(el&&el.value)budget[c.id]=parseFloat(el.value);else delete budget[c.id];});localStorage.setItem('mg_gen_budget',JSON.stringify(budget));renderBudget();toast('\U0001f4be Presupuesto guardado');}
+function saveBudget(){CATEGORIES.forEach(c=>{const el=document.getElementById('b_'+c.id);if(el&&el.value)budget[c.id]=parseFloat(el.value);else delete budget[c.id];});localStorage.setItem('mg_gen_budget',JSON.stringify(budget));renderBudget();toast('\u{1f4be} Presupuesto guardado');}
 
 function renderRecent(data){
   const el=document.getElementById('recentRows'),list=[...data].sort((a,b)=>b.fecha.localeCompare(a.fecha)).slice(0,6);
-  if(!list.length){el.innerHTML=`<div class="empty"><div class="empty-icon">\U0001f4b8</div><div class="empty-text">Sin gastos este mes</div><div class="empty-sub">Pulsa "+ Nuevo Gasto" para empezar</div></div>`;return;}
-  el.innerHTML=list.map(e=>{const c=catById(e.categoria),payClass=e.pago==='tarjeta'?'pay-tarjeta':e.pago==='bizum'?'pay-bizum':'pay-efectivo',payIcon=e.pago==='tarjeta'?'\U0001f4b3':e.pago==='bizum'?'\U0001f4f1':'\U0001f4b5';return `<div class="expense-row" onclick="openModal('${e.id}')"><div style="color:var(--muted);font-size:12px">${fmtD(e.fecha)}</div><div><div style="font-weight:600;font-size:13px">${e.lugar||e.desc||'\u2014'}${e.recurrente?' \U0001f504':''}</div>${e.desc&&e.lugar?`<div style="font-size:11px;color:var(--muted)">${e.desc}</div>`:''}</div><div><span class="pill" style="background:${c.color}20;color:${c.color};border:1px solid ${c.color}40">${c.icon} ${c.label}</span></div><div><span class="pill ${payClass}">${payIcon} ${e.pago}</span></div><div style="text-align:right;font-weight:600;font-size:13px">${fmt(e.importe,e.moneda||'\u20ac')}</div><div></div></div>`;}).join('');
+  if(!list.length){el.innerHTML=`<div class="empty"><div class="empty-icon">\u{1f4b8}</div><div class="empty-text">Sin gastos este mes</div><div class="empty-sub">Pulsa "+ Nuevo Gasto" para empezar</div></div>`;return;}
+  el.innerHTML=list.map(e=>{const c=catById(e.categoria),payClass=e.pago==='tarjeta'?'pay-tarjeta':e.pago==='bizum'?'pay-bizum':'pay-efectivo',payIcon=e.pago==='tarjeta'?'\u{1f4b3}':e.pago==='bizum'?'\u{1f4f1}':'\u{1f4b5}';return `<div class="expense-row" onclick="openModal('${e.id}')"><div style="color:var(--muted);font-size:12px">${fmtD(e.fecha)}</div><div><div style="font-weight:600;font-size:13px">${e.lugar||e.desc||'\u2014'}${e.recurrente?' \u{1f504}':''}</div>${e.desc&&e.lugar?`<div style="font-size:11px;color:var(--muted)">${e.desc}</div>`:''}</div><div><span class="pill" style="background:${c.color}20;color:${c.color};border:1px solid ${c.color}40">${c.icon} ${c.label}</span></div><div><span class="pill ${payClass}">${payIcon} ${e.pago}</span></div><div style="text-align:right;font-weight:600;font-size:13px">${fmt(e.importe,e.moneda||'\u20ac')}</div><div></div></div>`;}).join('');
 }
 
 function openModal(id){
@@ -495,7 +495,7 @@ function saveExpense(ev){
   localStorage.setItem('mg_gen_expenses',JSON.stringify(expenses));
   closeModal();renderTab();
 }
-function delExpense(id){if(!confirm('\u00bfEliminar este gasto?'))return;expenses=expenses.filter(e=>e.id!==id);localStorage.setItem('mg_gen_expenses',JSON.stringify(expenses));renderTab();toast('\U0001f5d1\ufe0f Gasto eliminado');}
+function delExpense(id){if(!confirm('\u00bfEliminar este gasto?'))return;expenses=expenses.filter(e=>e.id!==id);localStorage.setItem('mg_gen_expenses',JSON.stringify(expenses));renderTab();toast('\u{1f5d1}\ufe0f Gasto eliminado');}
 
 function setupCanvas(id,h){const c=document.getElementById(id);if(!c)return null;const dpr=window.devicePixelRatio||1,W=c.getBoundingClientRect().width||600;c.width=W*dpr;c.height=h*dpr;c.style.width=W+'px';c.style.height=h+'px';const ctx=c.getContext('2d');ctx.scale(dpr,dpr);return{ctx,W,H:h};}
 
