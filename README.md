@@ -1,19 +1,23 @@
-# 💰 MisGastos - Personal Finance & Expense Tracker
+# MisGastos - Personal Finance Tracker
 
-Una aplicacin web moderna, privada y totalmente gratuita para llevar el control absoluto de tus finanzas personales, presupuestos y estadsticas de gastos.
+Aplicación web Single-Page Application (SPA) para el seguimiento de finanzas personales, gestión de presupuestos y visualización analítica de gastos.
 
-## 🚀 Caractersticas
-- **100% Privado y Seguro:** Los datos se guardan exclusivamente en el `localStorage` de tu navegador web. Ninguna informacin financiera viaja a servidores de internet.
-- **Dashboard Interactivo:** Resumen mensual, gastos por categora, control de ingresos y grficos visuales atractivos.
-- **Gestin de Presupuestos:** Establece lmites mensuales de gasto para mantener tus finanzas bajo control.
-- **Anlisis y Estadsticas:** Visualiza la evolucin de tus gastos a 6 meses, promedios diarios, das de picos de consumo y tipos de pago (Efectivo, Tarjeta, Bizum).
-- **Fcil de usar:** Interfaz limpia, rpida y sin requerir instalaciones complejas ni bases de datos.
+## 🏗️ Arquitectura y Funcionamiento Interno
+El proyecto está diseñado siguiendo una arquitectura puramente frontend, priorizando la privacidad del usuario y la latencia cero:
+- **Persistencia de Datos:** Utiliza la Web Storage API (localStorage) para mantener el estado de la aplicación entre sesiones (mg_gen_expenses y mg_gen_budget). Los datos nunca abandonan el dispositivo del cliente.
+- **Motor de Renderizado:** Manipulación directa del DOM (Vanilla JavaScript) optimizada para evitar dependencias pesadas, garantizando tiempos de carga ultrarrápidos y bajo consumo de memoria RAM.
+- **Visualización de Datos:** Implementa renderizado en <canvas> nativo con algoritmos matemáticos en 2D para generar gráficos de dona y barras dinámicos sin librerías de terceros excesivas.
 
-## 🛠️ Cmo usarlo
-Al estar construido 100% con tecnologas web estndar, no necesitas un servidor para usarlo:
-1. Clona este repositorio o descarga los archivos.
-2. Abre el archivo `gastos-generales.html` haciendo doble clic para que se abra en tu navegador preferido (Chrome, Edge, Firefox, Safari).
-3. Empieza a registrar tus gastos y administrar tu presupuesto de inmediato!
+## 📂 Estructura del Proyecto
+`plaintext
+mis-gastos-generales/
+├── gastos-generales.html      # Estructura principal, estilos embebidos y lógica JS
+├── misgastos_general.ico      # Icono de la aplicación
+├── misgastos_general_icon...  # Recursos gráficos base
+└── README.md
+`
 
-## 🏷️ Etiquetas (SEO)
-`expense tracker` `finanzas personales` `control de gastos` `presupuestos` `javascript budget app` `localstorage tracker`
+## ⚙️ Configuración y Despliegue
+La aplicación es estática y no requiere entorno de ejecución (Runtime) en el servidor. 
+1. Clonar el repositorio.
+2. Abrir directamente gastos-generales.html en cualquier navegador web moderno.
